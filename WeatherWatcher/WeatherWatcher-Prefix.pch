@@ -11,4 +11,13 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
 #endif
+
+
+#define kAppID @"bf066c8cc299192caec357317334acf6"
+#define kBaseURL @"http://api.openweathermap.org/data/2.5/"
+
+#define kForecastNotification @"ForecastRetrieved"
+#define kFiveDayForecastNotification @"FiveDayForecastRetrieved"
