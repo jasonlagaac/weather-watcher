@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface TPWeatherModel : NSObject <CLLocationManagerDelegate>
+@interface TPWeather : NSObject <CLLocationManagerDelegate>
 
 - (void)retrieveWeatherAtLatitude:(CGFloat)latitude
                         longitude:(CGFloat)longitude

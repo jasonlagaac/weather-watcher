@@ -8,11 +8,13 @@
 
 #import "TPWeatherWatcherViewController.h"
 #import "TPWeatherForecastItem.h"
+#import "TPWeather.h"
 
 NSInteger const maximumForecastItems = 5;
 
 @interface TPWeatherWatcherViewController ()
 @property (nonatomic, strong) NSMutableArray *forecastItems;
+@property (nonatomic, strong) TPWeather *weather;
 @end
 
 @implementation TPWeatherWatcherViewController
@@ -44,7 +46,7 @@ NSInteger const maximumForecastItems = 5;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning

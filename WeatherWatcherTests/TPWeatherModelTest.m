@@ -5,7 +5,7 @@
 //  Created by: Jason Lagaac
 //
 
-#import "TPWeatherModel.h"
+#import "TPWeather.h"
 
 #import <SenTestingKit/SenTestingKit.h>
 
@@ -26,7 +26,7 @@
     // test fixture ivars go here
     CGFloat latitude;
     CGFloat longitude;
-    TPWeatherModel *sut;
+    TPWeather *sut;
 
     dispatch_semaphore_t semaphore;
     __block NSDictionary *weatherData;
@@ -36,7 +36,7 @@
 - (void)setUp
 {
     [super setUp];
-    sut = [[TPWeatherModel alloc] init];
+    sut = [[TPWeather alloc] init];
 
 }
 
@@ -51,6 +51,12 @@
 - (void)weatherRetrieved:(NSNotification *)notification
 {
     weatherData = [[notification object] copy];
+    dispatch_semaphore_signal(semaphore);
+}
+
+- (void)forecastRetrieved:(NSNotification *)notification
+{
+    weatherForecast = [[notification object] copy];
     dispatch_semaphore_signal(semaphore);
 }
 
@@ -122,6 +128,25 @@
                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
     
     assertThat(weatherData, notNilValue());
+}
+
+- (void)testShouldRetrieveForecastWithLocationServices
+{
+    //Given
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(forecastRetrieved:)
+                                                 name:kFiveDayForecastNotification
+                                               object:nil];
+    semaphore = dispatch_semaphore_create(0);
+    
+    // When
+    [sut startMonitoringLocation];
+    
+    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
+    
+    assertThat(weatherForecast, notNilValue());
 }
 
 @end

@@ -42,7 +42,7 @@
 		B8F5218517D8AEC3002FE8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216517D8AEC2002FE8E5 /* UIKit.framework */; };
 		B8F5218617D8AEC3002FE8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216717D8AEC2002FE8E5 /* Foundation.framework */; };
 		B8F5218E17D8AEC3002FE8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B8F5218C17D8AEC3002FE8E5 /* InfoPlist.strings */; };
-		B8F5219C17D8B01D002FE8E5 /* TPWeatherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F5219B17D8B01D002FE8E5 /* TPWeatherModel.m */; };
+		B8F5219C17D8B01D002FE8E5 /* TPWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F5219B17D8B01D002FE8E5 /* TPWeather.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,8 +94,8 @@
 		B8F5218317D8AEC3002FE8E5 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		B8F5218B17D8AEC3002FE8E5 /* WeatherWatcherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WeatherWatcherTests-Info.plist"; sourceTree = "<group>"; };
 		B8F5218D17D8AEC3002FE8E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B8F5219A17D8B01D002FE8E5 /* TPWeatherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPWeatherModel.h; sourceTree = "<group>"; };
-		B8F5219B17D8B01D002FE8E5 /* TPWeatherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherModel.m; sourceTree = "<group>"; };
+		B8F5219A17D8B01D002FE8E5 /* TPWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPWeather.h; sourceTree = "<group>"; };
+		B8F5219B17D8B01D002FE8E5 /* TPWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeather.m; sourceTree = "<group>"; };
 		D1B43CCD4F644B69A8CCC2BA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,8 +187,8 @@
 			children = (
 				B8F5217417D8AEC3002FE8E5 /* AppDelegate.h */,
 				B8F5217517D8AEC3002FE8E5 /* AppDelegate.m */,
-				B8F5219A17D8B01D002FE8E5 /* TPWeatherModel.h */,
-				B8F5219B17D8B01D002FE8E5 /* TPWeatherModel.m */,
+				B8F5219A17D8B01D002FE8E5 /* TPWeather.h */,
+				B8F5219B17D8B01D002FE8E5 /* TPWeather.m */,
 				B834FC4017D95BB70015D6C0 /* TPWeatherWatcherViewController.h */,
 				B834FC4117D95BB70015D6C0 /* TPWeatherWatcherViewController.m */,
 				B834FC5217D9C01E0015D6C0 /* TPWeatherForecastItem.h */,
@@ -418,7 +418,7 @@
 			files = (
 				B8F5217217D8AEC3002FE8E5 /* main.m in Sources */,
 				B8F5217617D8AEC3002FE8E5 /* AppDelegate.m in Sources */,
-				B8F5219C17D8B01D002FE8E5 /* TPWeatherModel.m in Sources */,
+				B8F5219C17D8B01D002FE8E5 /* TPWeather.m in Sources */,
 				B834FC4217D95BB70015D6C0 /* TPWeatherWatcherViewController.m in Sources */,
 				B834FC5417D9C01E0015D6C0 /* TPWeatherForecastItem.m in Sources */,
 			);

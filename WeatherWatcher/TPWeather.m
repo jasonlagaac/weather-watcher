@@ -6,17 +6,17 @@
 //  Copyright (c) 2013 Jason Lagaac. All rights reserved.
 //
 
-#import "TPWeatherModel.h"
+#import "TPWeather.h"
 #import <AFNetworking/AFNetworking.h>
 
 // Define the Base URL Format
-@interface TPWeatherModel ()
+@interface TPWeather ()
 @property (nonatomic, strong) AFHTTPClient *client;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 
-@implementation TPWeatherModel
+@implementation TPWeather
 
 - (id)init
 {
