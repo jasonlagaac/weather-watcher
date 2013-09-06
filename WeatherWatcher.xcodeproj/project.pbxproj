@@ -11,7 +11,7 @@
 		7C4A5FE2ECA744AB8E9731AE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F274DDC6A1459E805A62AB /* libPods.a */; };
 		B834FC3317D8B6E50015D6C0 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B834FC3217D8B6E50015D6C0 /* OCMockitoIOS.framework */; };
 		B834FC3517D8B7030015D6C0 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B834FC3417D8B7030015D6C0 /* OCHamcrestIOS.framework */; };
-		B834FC3717D8B76C0015D6C0 /* TPWeatherModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B834FC3617D8B76C0015D6C0 /* TPWeatherModelTest.m */; };
+		B834FC3717D8B76C0015D6C0 /* TPWeatherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B834FC3617D8B76C0015D6C0 /* TPWeatherTest.m */; };
 		B834FC3917D8C5060015D6C0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B834FC3817D8C5060015D6C0 /* SystemConfiguration.framework */; };
 		B834FC3A17D8C50D0015D6C0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B834FC3817D8C5060015D6C0 /* SystemConfiguration.framework */; };
 		B834FC3C17D8C5250015D6C0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B834FC3B17D8C5250015D6C0 /* MobileCoreServices.framework */; };
@@ -59,7 +59,7 @@
 		12F274DDC6A1459E805A62AB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B834FC3217D8B6E50015D6C0 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMockitoIOS.framework; sourceTree = "<group>"; };
 		B834FC3417D8B7030015D6C0 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCHamcrestIOS.framework; sourceTree = "<group>"; };
-		B834FC3617D8B76C0015D6C0 /* TPWeatherModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherModelTest.m; sourceTree = "<group>"; };
+		B834FC3617D8B76C0015D6C0 /* TPWeatherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherTest.m; sourceTree = "<group>"; };
 		B834FC3817D8C5060015D6C0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B834FC3B17D8C5250015D6C0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B834FC3E17D95B460015D6C0 /* TPWeatherWatcherViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherWatcherViewControllerTest.m; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				B834FC3E17D95B460015D6C0 /* TPWeatherWatcherViewControllerTest.m */,
-				B834FC3617D8B76C0015D6C0 /* TPWeatherModelTest.m */,
+				B834FC3617D8B76C0015D6C0 /* TPWeatherTest.m */,
 				B834FC5717D9CF580015D6C0 /* TPWeatherForecastItemTest.m */,
 				B8F5218A17D8AEC3002FE8E5 /* Supporting Files */,
 			);
@@ -428,7 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B834FC3717D8B76C0015D6C0 /* TPWeatherModelTest.m in Sources */,
+				B834FC3717D8B76C0015D6C0 /* TPWeatherTest.m in Sources */,
 				B834FC3F17D95B460015D6C0 /* TPWeatherWatcherViewControllerTest.m in Sources */,
 				B834FC5817D9CF580015D6C0 /* TPWeatherForecastItemTest.m in Sources */,
 			);

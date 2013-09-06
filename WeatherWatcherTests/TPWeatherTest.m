@@ -18,10 +18,10 @@
 #import <OCMockitoIOS/OCMockitoIOS.h>
 
 
-@interface TPWeatherModelTest : SenTestCase
+@interface TPWeatherTest : SenTestCase
 @end
 
-@implementation TPWeatherModelTest
+@implementation TPWeatherTest
 {
     // test fixture ivars go here
     CGFloat latitude;
