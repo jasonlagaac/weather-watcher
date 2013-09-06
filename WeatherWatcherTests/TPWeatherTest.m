@@ -116,7 +116,7 @@
     //Given
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(weatherRetrieved:)
-                                                 name:kForecastNotification
+                                                 name:kTPForecastNotification
                                                object:nil];
     semaphore = dispatch_semaphore_create(0);
     
@@ -135,7 +135,7 @@
     //Given
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(forecastRetrieved:)
-                                                 name:kFiveDayForecastNotification
+                                                 name:kTPFiveDayForecastNotification
                                                object:nil];
     semaphore = dispatch_semaphore_create(0);
     

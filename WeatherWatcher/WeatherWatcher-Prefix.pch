@@ -19,5 +19,5 @@
 #define kAppID @"bf066c8cc299192caec357317334acf6"
 #define kBaseURL @"http://api.openweathermap.org/data/2.5/"
 
-#define kForecastNotification @"ForecastRetrieved"
-#define kFiveDayForecastNotification @"FiveDayForecastRetrieved"
+#define kTPForecastNotification @"ForecastRetrieved"
+#define kTPFiveDayForecastNotification @"FiveDayForecastRetrieved"

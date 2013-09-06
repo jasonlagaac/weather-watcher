@@ -24,14 +24,20 @@ NSInteger const maximumForecastItems = 5;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self initialiseForecastItems];
         self.weather = [[TPWeather alloc] init];
+        [self initialiseForecastItems];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(forecastLoaded:)
+                                                     name:kTPForecastNotification
+                                                   object:nil];
     }
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.forecastItems = nil;
 }
 
@@ -79,5 +85,15 @@ NSInteger const maximumForecastItems = 5;
     }
 }
 
+
+#pragma mark - Notification Handlers
+////////////////////////////////////////////////////////////////////////////////
+
+- (void)forecastLoaded:(NSNotification *)notification
+{
+    NSDictionary *currentForecast = [notification object];
+    NSInteger currentTemperature = [[[currentForecast objectForKey:@"main"] objectForKey:@"temp"] intValue];
+    self.temperature.text = [NSString stringWithFormat:@"%d", currentTemperature];
+}
 
 @end

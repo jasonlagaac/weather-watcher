@@ -114,7 +114,7 @@
         [self retrieveWeatherAtLatitude:location.coordinate.latitude
                               longitude:location.coordinate.longitude
                                 success:^(NSDictionary *data) {
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:kForecastNotification
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:kTPForecastNotification
                                                                                         object:data];
                                 } fail:^{
                                     
@@ -123,7 +123,7 @@
         [self retrieveFiveDayWeatherForecastAtLatitude:location.coordinate.latitude
                                              longitude:location.coordinate.longitude
                                                success:^(NSArray *data) {
-                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kFiveDayForecastNotification
+                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kTPFiveDayForecastNotification
                                                                                                        object:data];
                                                } fail:^{
                                     

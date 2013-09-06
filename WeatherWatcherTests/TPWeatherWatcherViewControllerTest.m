@@ -31,91 +31,88 @@
     forecastDataLoaded = NO;
     
     sut = [[TPWeatherWatcherViewController alloc] initWithNibName:@"TPWeatherWatcher"
-                                                           bundle:nil];
+                                                           bundle:nil];    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(forecastRetrieved:)
+                                                 name:kTPFiveDayForecastNotification
+                                               object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(weatherRetrieved:)
+                                                 name:kTPForecastNotification
+                                               object:nil];
+    
+    semaphore = dispatch_semaphore_create(0);
+    [sut view];
+    
+    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
+
 }
 
 - (void)tearDown
 {
     sut = nil;
+    semaphore = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     [super tearDown];
 }
+
 
 - (void)weatherRetrieved:(NSNotification *)notification
 {
     weatherDataLoaded = YES;
-    dispatch_semaphore_signal(semaphore);
+    
+    if (forecastDataLoaded) {
+        dispatch_semaphore_signal(semaphore);
+    }
 }
 
 - (void)forecastRetrieved:(NSNotification *)notification
 {
     forecastDataLoaded = YES;
-    dispatch_semaphore_signal(semaphore);
+    
+    if (weatherDataLoaded) {
+        dispatch_semaphore_signal(semaphore);
+    }
 }
-
-
 
 - (void)testWeatherStateIconShouldBeConnected
 {
-    [sut view];
     assertThat(sut.weatherStateIcon, notNilValue());
 }
 
 - (void)testLocationNameLabelShouldBeConnected
 {
-    [sut view];
     assertThat(sut.currentLocationName, notNilValue());
 }
 
 - (void)testLocationLabelShouldHaveACityName
 {
-    [sut view];
     assertThat(sut.currentLocationName.text, equalTo(@"NEW YORK"));
 }
 
 - (void)testTemperatureLabelShouldBeConnected
 {
-    [sut view];
     assertThat(sut.temperature, notNilValue());
 }
 
 - (void)testTemperatureLabelShouldHaveATemperatureValue
 {
-    [sut view];
-    assertThat(sut.temperature.text, equalTo(@"9000"));
+    assertThat(sut.temperature.text, isNot(equalTo(@"")));
 }
 
 - (void)testFiveDayForecastAreaShouldBeConnected
 {
-    [sut view];
     assertThat(sut.fiveDayForecast, notNilValue());
 }
 
 - (void)testShouldLoadWeatherOnLoad
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(forecastRetrieved:)
-                                                 name:kFiveDayForecastNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(weatherRetrieved:)
-                                                 name:kForecastNotification
-                                               object:nil];
-    semaphore = dispatch_semaphore_create(0);
-    [sut view];
-
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-
     assertThatBool(weatherDataLoaded, equalToBool(YES));
     assertThatBool(forecastDataLoaded, equalToBool(YES));
 }
-
-
 
 
 @end
