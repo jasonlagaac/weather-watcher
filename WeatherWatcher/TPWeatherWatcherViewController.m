@@ -25,6 +25,7 @@ NSInteger const maximumForecastItems = 5;
     if (self) {
         // Custom initialization
         [self initialiseForecastItems];
+        self.weather = [[TPWeather alloc] init];
     }
     return self;
 }
@@ -39,9 +40,8 @@ NSInteger const maximumForecastItems = 5;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
+    [self.weather startMonitoringLocation];
     [self drawForecast];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
