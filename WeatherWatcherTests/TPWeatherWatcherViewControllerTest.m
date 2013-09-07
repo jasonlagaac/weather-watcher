@@ -128,6 +128,26 @@
     assertThatBool(forecastDataLoaded, equalToBool(YES));
 }
 
+- (void)testShouldHaveMenuButtonConnected
+{
+    assertThat(sut.menuButton, notNilValue());
+}
+
+- (void)testPressedMenuButtonShouldShowMenu
+{
+    [sut.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    assertThatFloat(sut.view.center.x, isNot(equalToFloat(160.0f)));
+}
+
+
+- (void)testPressedMenuButtonTwiceShouldHideMenu
+{
+    [sut.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [sut.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    assertThatFloat(sut.view.center.x, equalToFloat(160.0f));
+}
 
 
 @end

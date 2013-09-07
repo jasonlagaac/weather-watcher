@@ -249,6 +249,9 @@ UIColor* colorForTemperature(float temperature)
                      }];
 }
 
+#pragma mark - Element Load Actions
+////////////////////////////////////////////////////////////////////////////////
+
 - (void)reloadElements
 {
     if (self.weatherLoaded && self.locationNameLoaded && self.locationNameLoaded)
@@ -259,12 +262,28 @@ UIColor* colorForTemperature(float temperature)
                              self.currentLocationName.alpha = 1.0f;
                              self.temperature.alpha = 1.0f;
                              self.weatherStateIcon.alpha = 1.0f;
+                             self.menuButton.alpha = 1.0f;
                          } completion:^(BOOL finished) {
                              self.locationNameLoaded = NO;
                              self.weatherLoaded = NO;
                              self.forecastLoaded = NO;
                          }];
     }
+}
+
+#pragma mark - Interface Actions
+////////////////////////////////////////////////////////////////////////////////
+
+- (IBAction)presentMenu:(id)sender
+{
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         if (self.view.center.x == 160.0f) {
+                             self.view.center = CGPointMake(400.0f, self.view.center.y);
+                         } else {
+                             self.view.center = CGPointMake(160.0f, self.view.center.y);
+                         }
+                     }];
 }
 
 

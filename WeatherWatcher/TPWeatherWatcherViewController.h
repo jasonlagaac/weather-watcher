@@ -14,5 +14,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *currentLocationName;
 @property (nonatomic, strong) IBOutlet UILabel *temperature;
 @property (nonatomic, strong) IBOutlet UIView *fiveDayForecast;
+@property (nonatomic, strong) IBOutlet UIButton *menuButton;
+
+- (IBAction)presentMenu:(id)sender;
 
 @end
