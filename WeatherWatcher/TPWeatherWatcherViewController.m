@@ -101,6 +101,7 @@ UIColor* colorForTemperature(float temperature)
         self.weatherLoaded = NO;
         self.forecastLoaded = NO;
         self.locationNameLoaded = NO;
+
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(weatherLoaded:)
@@ -131,6 +132,7 @@ UIColor* colorForTemperature(float temperature)
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+        
     [self.weather startMonitoringLocation];
     [self drawForecast];
 }
@@ -193,7 +195,7 @@ UIColor* colorForTemperature(float temperature)
                          
                          [UIView animateWithDuration:0.5
                                           animations:^{
-                                              self.view.backgroundColor = colorForTemperature(currentTemperature);
+                                              self.mainContent.backgroundColor = colorForTemperature(currentTemperature);
                                           } completion:^(BOOL finished) {
                                               [self reloadElements];
                                           }];
@@ -278,10 +280,10 @@ UIColor* colorForTemperature(float temperature)
 {
     [UIView animateWithDuration:0.2
                      animations:^{
-                         if (self.view.center.x == 160.0f) {
-                             self.view.center = CGPointMake(400.0f, self.view.center.y);
+                         if (self.mainContent.center.x == 160.0f) {
+                             self.mainContent.center = CGPointMake(400.0f, self.mainContent.center.y);
                          } else {
-                             self.view.center = CGPointMake(160.0f, self.view.center.y);
+                             self.mainContent.center = CGPointMake(160.0f, self.mainContent.center.y);
                          }
                      }];
 }

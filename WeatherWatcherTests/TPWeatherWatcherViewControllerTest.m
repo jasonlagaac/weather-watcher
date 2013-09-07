@@ -137,7 +137,7 @@
 {
     [sut.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
-    assertThatFloat(sut.view.center.x, isNot(equalToFloat(160.0f)));
+    assertThatFloat(sut.mainContent.center.x, isNot(equalToFloat(160.0f)));
 }
 
 
@@ -146,8 +146,22 @@
     [sut.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     [sut.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
-    assertThatFloat(sut.view.center.x, equalToFloat(160.0f));
+    assertThatFloat(sut.mainContent.center.x, equalToFloat(160.0f));
 }
 
+- (void)testShouldHaveLocationListTableConnected
+{
+    assertThat(sut.locationListTable, notNilValue());
+}
+
+- (void)testLocationListTableShouldHaveAConnectedDelegate
+{
+    assertThat(sut.locationListTable.delegate, notNilValue());
+}
+
+- (void)testLocationListTableShouldHaveAConnectedDataSource
+{
+    assertThat(sut.locationListTable.dataSource, notNilValue());
+}
 
 @end
