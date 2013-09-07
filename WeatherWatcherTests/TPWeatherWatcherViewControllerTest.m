@@ -31,17 +31,18 @@
     forecastDataLoaded = NO;
     
     sut = [[TPWeatherWatcherViewController alloc] initWithNibName:@"TPWeatherWatcher"
-                                                           bundle:nil];    
+                                                           bundle:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(weatherRetrieved:)
+                                                 name:kTPWeatherNotification
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(forecastRetrieved:)
                                                  name:kTPFiveDayForecastNotification
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(weatherRetrieved:)
-                                                 name:kTPForecastNotification
-                                               object:nil];
-    
+        
     semaphore = dispatch_semaphore_create(0);
     [sut view];
     

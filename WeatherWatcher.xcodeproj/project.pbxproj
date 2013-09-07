@@ -23,7 +23,7 @@
 		B834FC5617D9CB860015D6C0 /* TPWeatherForecastItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5517D9CB850015D6C0 /* TPWeatherForecastItem.xib */; };
 		B834FC5817D9CF580015D6C0 /* TPWeatherForecastItemTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B834FC5717D9CF580015D6C0 /* TPWeatherForecastItemTest.m */; };
 		B834FC6017DA0A320015D6C0 /* Clear.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5A17DA0A320015D6C0 /* Clear.png */; };
-		B834FC6117DA0A320015D6C0 /* Clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5B17DA0A320015D6C0 /* Clouds.png */; };
+		B834FC6117DA0A320015D6C0 /* Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5B17DA0A320015D6C0 /* Cloud.png */; };
 		B834FC6217DA0A320015D6C0 /* Fog.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5C17DA0A320015D6C0 /* Fog.png */; };
 		B834FC6317DA0A320015D6C0 /* Rain.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5D17DA0A320015D6C0 /* Rain.png */; };
 		B834FC6417DA0A320015D6C0 /* Snow.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC5E17DA0A320015D6C0 /* Snow.png */; };
@@ -71,7 +71,7 @@
 		B834FC5517D9CB850015D6C0 /* TPWeatherForecastItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPWeatherForecastItem.xib; sourceTree = "<group>"; };
 		B834FC5717D9CF580015D6C0 /* TPWeatherForecastItemTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherForecastItemTest.m; sourceTree = "<group>"; };
 		B834FC5A17DA0A320015D6C0 /* Clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clear.png; sourceTree = "<group>"; };
-		B834FC5B17DA0A320015D6C0 /* Clouds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clouds.png; sourceTree = "<group>"; };
+		B834FC5B17DA0A320015D6C0 /* Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cloud.png; sourceTree = "<group>"; };
 		B834FC5C17DA0A320015D6C0 /* Fog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fog.png; sourceTree = "<group>"; };
 		B834FC5D17DA0A320015D6C0 /* Rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain.png; sourceTree = "<group>"; };
 		B834FC5E17DA0A320015D6C0 /* Snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow.png; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				B834FC5A17DA0A320015D6C0 /* Clear.png */,
-				B834FC5B17DA0A320015D6C0 /* Clouds.png */,
+				B834FC5B17DA0A320015D6C0 /* Cloud.png */,
 				B834FC5C17DA0A320015D6C0 /* Fog.png */,
 				B834FC5D17DA0A320015D6C0 /* Rain.png */,
 				B834FC5E17DA0A320015D6C0 /* Snow.png */,
@@ -317,7 +317,7 @@
 				B834FC4417D95D530015D6C0 /* TPWeatherWatcher.xib in Resources */,
 				B834FC5617D9CB860015D6C0 /* TPWeatherForecastItem.xib in Resources */,
 				B834FC6017DA0A320015D6C0 /* Clear.png in Resources */,
-				B834FC6117DA0A320015D6C0 /* Clouds.png in Resources */,
+				B834FC6117DA0A320015D6C0 /* Cloud.png in Resources */,
 				B834FC6217DA0A320015D6C0 /* Fog.png in Resources */,
 				B834FC6317DA0A320015D6C0 /* Rain.png in Resources */,
 				B834FC6417DA0A320015D6C0 /* Snow.png in Resources */,

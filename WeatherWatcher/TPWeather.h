@@ -11,14 +11,14 @@
 
 @interface TPWeather : NSObject <CLLocationManagerDelegate>
 
-- (void)retrieveWeatherAtLatitude:(CGFloat)latitude
-                        longitude:(CGFloat)longitude
+- (void)retrieveWeatherAtLatitude:(double)latitude
+                        longitude:(double)longitude
                           success:(void ( ^ ) (NSDictionary *data) )successBlock
                              fail:(void ( ^ ) () )failBlock;
 
-- (void)retrieveFiveDayWeatherForecastAtLatitude:(CGFloat)latitude
-                                       longitude:(CGFloat)longitude
-                                         success:(void ( ^ )(NSArray *data))successBlock
+- (void)retrieveFiveDayWeatherForecastAtLatitude:(double)latitude
+                                       longitude:(double)longitude
+                                         success:(void ( ^ )(NSDictionary *data))successBlock
                                             fail:(void ( ^ )())failBlock;
 
 - (void)startMonitoringLocation;

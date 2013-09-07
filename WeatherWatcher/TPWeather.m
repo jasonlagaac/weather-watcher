@@ -26,6 +26,7 @@
         // Initialise the location manager
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        self.locationManager.distanceFilter = 1000.0f;
         self.locationManager.delegate = self;
 }
     
@@ -41,13 +42,11 @@
 
 }
 
-
-
 #pragma mark - Weather Retrieveal Actions
 /////////////////////////////////////////////////////////////////////////////////
 
-- (void)retrieveWeatherAtLatitude:(CGFloat)latitude
-                        longitude:(CGFloat)longitude
+- (void)retrieveWeatherAtLatitude:(double)latitude
+                        longitude:(double)longitude
                           success:(void ( ^ )(NSDictionary *data))successBlock
                              fail:(void ( ^ )())failBlock
 {
@@ -58,14 +57,15 @@
                       id payload = [NSJSONSerialization JSONObjectWithData:responseObject
                                                                    options:NSJSONReadingMutableContainers
                                                                      error:nil];
+                     NSLog(@"Payload: %@", payload);
                       successBlock(payload);
                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       failBlock();
                   }];
 }
 
-- (void)retrieveFiveDayWeatherForecastAtLatitude:(CGFloat)latitude
-                                       longitude:(CGFloat)longitude
+- (void)retrieveFiveDayWeatherForecastAtLatitude:(double)latitude
+                                       longitude:(double)longitude
                                          success:(void ( ^ )(NSArray *data))successBlock
                                             fail:(void ( ^ )())failBlock
 {
@@ -76,10 +76,8 @@
                      id payload = [NSJSONSerialization JSONObjectWithData:responseObject
                                                                   options:NSJSONReadingMutableContainers
                                                                     error:nil];
-                     NSLog(@"Payload: %@", [payload objectForKey:@"list"] );
                      successBlock(payload);
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"Failure: %@", error);
                      failBlock();
                  }];
 }
@@ -105,7 +103,7 @@
     NSDate* eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     
-    if (abs(howRecent) < 15.0) {
+    if (abs(howRecent) < 300.0) {
         // If the event is recent, do something with it.
         NSLog(@"latitude %+.6f, longitude %+.6f\n",
               location.coordinate.latitude,
@@ -114,7 +112,7 @@
         [self retrieveWeatherAtLatitude:location.coordinate.latitude
                               longitude:location.coordinate.longitude
                                 success:^(NSDictionary *data) {
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:kTPForecastNotification
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:kTPWeatherNotification
                                                                                         object:data];
                                 } fail:^{
                                     
@@ -122,7 +120,7 @@
         
         [self retrieveFiveDayWeatherForecastAtLatitude:location.coordinate.latitude
                                              longitude:location.coordinate.longitude
-                                               success:^(NSArray *data) {
+                                               success:^(NSDictionary *data) {
                                                    [[NSNotificationCenter defaultCenter] postNotificationName:kTPFiveDayForecastNotification
                                                                                                        object:data];
                                                } fail:^{

@@ -24,8 +24,8 @@
 @implementation TPWeatherTest
 {
     // test fixture ivars go here
-    CGFloat latitude;
-    CGFloat longitude;
+    double latitude;
+    double longitude;
     TPWeather *sut;
 
     dispatch_semaphore_t semaphore;
@@ -96,7 +96,7 @@
     // When
     [sut retrieveFiveDayWeatherForecastAtLatitude:-33.880036
                                         longitude:151.200238
-                                          success:^(NSArray *data){
+                                          success:^(NSDictionary *data){
                                               weatherForecast = [data copy];
                                               dispatch_semaphore_signal(semaphore);
                                           } fail:^{
@@ -116,7 +116,7 @@
     //Given
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(weatherRetrieved:)
-                                                 name:kTPForecastNotification
+                                                 name:kTPWeatherNotification
                                                object:nil];
     semaphore = dispatch_semaphore_create(0);
     
