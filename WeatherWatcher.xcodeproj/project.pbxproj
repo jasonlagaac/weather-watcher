@@ -30,6 +30,9 @@
 		B834FC7617DBA8CE0015D6C0 /* Rain.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC6F17DBA8CE0015D6C0 /* Rain.png */; };
 		B834FC7717DBA8CE0015D6C0 /* Snow.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC7017DBA8CE0015D6C0 /* Snow.png */; };
 		B834FC7817DBA8CE0015D6C0 /* Storm.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC7117DBA8CE0015D6C0 /* Storm.png */; };
+		B88A7D9917DBADD80094D053 /* TPWeatherWatcherMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B88A7D9717DBADD80094D053 /* TPWeatherWatcherMenuViewController.m */; };
+		B88A7D9A17DBADD80094D053 /* TPWeatherWatcherMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B88A7D9817DBADD80094D053 /* TPWeatherWatcherMenuViewController.xib */; };
+		B88A7D9F17DBAE890094D053 /* TPWeatherWatcherMenuViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B88A7D9E17DBAE890094D053 /* TPWeatherWatcherMenuViewControllerTest.m */; };
 		B8F5216617D8AEC2002FE8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216517D8AEC2002FE8E5 /* UIKit.framework */; };
 		B8F5216817D8AEC2002FE8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216717D8AEC2002FE8E5 /* Foundation.framework */; };
 		B8F5216A17D8AEC2002FE8E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216917D8AEC2002FE8E5 /* CoreGraphics.framework */; };
@@ -79,6 +82,10 @@
 		B834FC6F17DBA8CE0015D6C0 /* Rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain.png; sourceTree = "<group>"; };
 		B834FC7017DBA8CE0015D6C0 /* Snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow.png; sourceTree = "<group>"; };
 		B834FC7117DBA8CE0015D6C0 /* Storm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Storm.png; sourceTree = "<group>"; };
+		B88A7D9617DBADD80094D053 /* TPWeatherWatcherMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPWeatherWatcherMenuViewController.h; sourceTree = "<group>"; };
+		B88A7D9717DBADD80094D053 /* TPWeatherWatcherMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherWatcherMenuViewController.m; sourceTree = "<group>"; };
+		B88A7D9817DBADD80094D053 /* TPWeatherWatcherMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPWeatherWatcherMenuViewController.xib; sourceTree = "<group>"; };
+		B88A7D9E17DBAE890094D053 /* TPWeatherWatcherMenuViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPWeatherWatcherMenuViewControllerTest.m; sourceTree = "<group>"; };
 		B8F5216217D8AEC2002FE8E5 /* WeatherWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F5216517D8AEC2002FE8E5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B8F5216717D8AEC2002FE8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -196,6 +203,9 @@
 				B834FC4117D95BB70015D6C0 /* TPWeatherWatcherViewController.m */,
 				B834FC5217D9C01E0015D6C0 /* TPWeatherForecastItem.h */,
 				B834FC5317D9C01E0015D6C0 /* TPWeatherForecastItem.m */,
+				B88A7D9617DBADD80094D053 /* TPWeatherWatcherMenuViewController.h */,
+				B88A7D9717DBADD80094D053 /* TPWeatherWatcherMenuViewController.m */,
+				B88A7D9817DBADD80094D053 /* TPWeatherWatcherMenuViewController.xib */,
 				B834FC5517D9CB850015D6C0 /* TPWeatherForecastItem.xib */,
 				B834FC4317D95D530015D6C0 /* TPWeatherWatcher.xib */,
 				B8F5216C17D8AEC3002FE8E5 /* Supporting Files */,
@@ -222,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				B834FC3E17D95B460015D6C0 /* TPWeatherWatcherViewControllerTest.m */,
+				B88A7D9E17DBAE890094D053 /* TPWeatherWatcherMenuViewControllerTest.m */,
 				B834FC3617D8B76C0015D6C0 /* TPWeatherTest.m */,
 				B834FC5717D9CF580015D6C0 /* TPWeatherForecastItemTest.m */,
 				B8F5218A17D8AEC3002FE8E5 /* Supporting Files */,
@@ -326,6 +337,7 @@
 				B834FC7617DBA8CE0015D6C0 /* Rain.png in Resources */,
 				B834FC7717DBA8CE0015D6C0 /* Snow.png in Resources */,
 				B834FC7817DBA8CE0015D6C0 /* Storm.png in Resources */,
+				B88A7D9A17DBADD80094D053 /* TPWeatherWatcherMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +437,7 @@
 				B8F5219C17D8B01D002FE8E5 /* TPWeather.m in Sources */,
 				B834FC4217D95BB70015D6C0 /* TPWeatherWatcherViewController.m in Sources */,
 				B834FC5417D9C01E0015D6C0 /* TPWeatherForecastItem.m in Sources */,
+				B88A7D9917DBADD80094D053 /* TPWeatherWatcherMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +448,7 @@
 				B834FC3717D8B76C0015D6C0 /* TPWeatherTest.m in Sources */,
 				B834FC3F17D95B460015D6C0 /* TPWeatherWatcherViewControllerTest.m in Sources */,
 				B834FC5817D9CF580015D6C0 /* TPWeatherForecastItemTest.m in Sources */,
+				B88A7D9F17DBAE890094D053 /* TPWeatherWatcherMenuViewControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
