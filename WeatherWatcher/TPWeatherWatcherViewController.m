@@ -104,6 +104,11 @@ UIColor* colorForTemperature(float temperature)
                                                  selector:@selector(forecastLoaded:)
                                                      name:kTPFiveDayForecastNotification
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(locationNameLoaded:)
+                                                     name:kTPReverseGeocodingNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -207,5 +212,11 @@ UIColor* colorForTemperature(float temperature)
         forecastItem.day.text = [[formatter stringFromDate:date] uppercaseString];
     }
 }
+
+- (void)locationNameLoaded:(NSNotification *)notification
+{
+    self.currentLocationName.text = [[notification object] uppercaseString];
+}
+
 
 @end

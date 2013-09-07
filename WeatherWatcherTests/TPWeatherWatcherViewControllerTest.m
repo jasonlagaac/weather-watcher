@@ -42,7 +42,13 @@
                                              selector:@selector(forecastRetrieved:)
                                                  name:kTPFiveDayForecastNotification
                                                object:nil];
-        
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(locationNameRetrieved:)
+                                                 name:kTPReverseGeocodingNotification
+                                               object:nil];
+
+    
     semaphore = dispatch_semaphore_create(0);
     [sut view];
     
@@ -79,6 +85,13 @@
     }
 }
 
+- (void)locationNameRetrieved:(NSNotification *)notification
+{
+    if (weatherDataLoaded && forecastDataLoaded) {
+        dispatch_semaphore_signal(semaphore);
+    }
+}
+
 - (void)testWeatherStateIconShouldBeConnected
 {
     assertThat(sut.weatherStateIcon, notNilValue());
@@ -91,7 +104,7 @@
 
 - (void)testLocationLabelShouldHaveACityName
 {
-    assertThat(sut.currentLocationName.text, equalTo(@"NEW YORK"));
+    assertThatInteger(sut.currentLocationName.text.length, isNot(equalToInteger(0)));
 }
 
 - (void)testTemperatureLabelShouldBeConnected
@@ -114,6 +127,7 @@
     assertThatBool(weatherDataLoaded, equalToBool(YES));
     assertThatBool(forecastDataLoaded, equalToBool(YES));
 }
+
 
 
 @end
