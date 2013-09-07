@@ -31,6 +31,7 @@
     dispatch_semaphore_t semaphore;
     __block NSDictionary *weatherData;
     __block NSArray *weatherForecast;
+    NSString *locationName;
 }
 
 - (void)setUp
@@ -59,6 +60,13 @@
     weatherForecast = [[notification object] copy];
     dispatch_semaphore_signal(semaphore);
 }
+
+- (void)locationNameRetrieved:(NSNotification *)notification
+{
+    locationName = [[notification object] copy];
+    dispatch_semaphore_signal(semaphore);
+}
+
 
 #pragma mark - Test cases
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,6 +155,24 @@
                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
     
     assertThat(weatherForecast, notNilValue());
+}
+
+- (void)testShouldRetrieveTheLocationName
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(locationNameRetrieved:)
+                                                 name:kTPReverseGeocodingNotification
+                                               object:nil];
+    semaphore = dispatch_semaphore_create(0);
+    
+    // When
+    [sut startMonitoringLocation];
+    
+    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
+    
+    assertThat(locationName, notNilValue());
 }
 
 

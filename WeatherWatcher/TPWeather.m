@@ -126,6 +126,13 @@
                                                } fail:^{
                                     
                                                }];
+        
+        CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+        [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
+                                                                object:[[placemarks objectAtIndex:0] locality]];
+
+        }];
     }
 }
 

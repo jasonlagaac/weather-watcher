@@ -21,4 +21,6 @@
 
 #define kTPWeatherNotification @"WeatherRetrieved"
 #define kTPFiveDayForecastNotification @"FiveDayForecastRetrieved"
+#define kTPReverseGeocodingNotification @"ReverseGeocodingRetrieved"
+
 #define kTPMaxForecastItems 5
