@@ -13,6 +13,7 @@
 @interface TPWeather ()
 @property (nonatomic, strong) AFHTTPClient *client;
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *currentLocation;
 @end
 
 
@@ -22,10 +23,11 @@
 {
     if (self = [super init]) {
         self.client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURL]];
+        self.currentLocation = [[CLLocation alloc] initWithLatitude:0 longitude:0];
         
         // Initialise the location manager
         self.locationManager = [[CLLocationManager alloc] init];
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.locationManager.distanceFilter = 1000.0f;
         self.locationManager.delegate = self;
 }
@@ -36,6 +38,7 @@
 - (void)dealloc
 {
     self.client = nil;
+    self.currentLocation = nil;
     
     [self.locationManager stopUpdatingLocation];
     self.locationManager = nil;
@@ -66,7 +69,7 @@
 
 - (void)retrieveFiveDayWeatherForecastAtLatitude:(double)latitude
                                        longitude:(double)longitude
-                                         success:(void ( ^ )(NSArray *data))successBlock
+                                         success:(void ( ^ )(NSDictionary *data))successBlock
                                             fail:(void ( ^ )())failBlock
 {
     NSString *getPath = [NSString stringWithFormat:@"forecast/daily?lat=%f&lon=%f&units=metric&cnt=5&APPID=%@", latitude, longitude, kAppID];
@@ -103,8 +106,9 @@
     NSDate* eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     
-    if (abs(howRecent) < 300.0) {
+    if (abs(howRecent) < 300.0 && [self.currentLocation distanceFromLocation:location]) {
         // If the event is recent, do something with it.
+        self.currentLocation = location;
         NSLog(@"latitude %+.6f, longitude %+.6f\n",
               location.coordinate.latitude,
               location.coordinate.longitude);
@@ -129,6 +133,7 @@
         
         CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
         [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            NSLog(@"Placemark: %@", [[placemarks objectAtIndex:0] locality]);
             [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
                                                                 object:[[placemarks objectAtIndex:0] locality]];
 

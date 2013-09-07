@@ -45,32 +45,32 @@ UIColor* colorForTemperature(float temperature)
                                            green:(225.0f/255.0f)
                                             blue:(235.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 0 && temperature < 10) {
+    } else if (temperature > 0 && temperature < 15) {
         temperatureColour =  [UIColor colorWithRed:(51.0f/255.0f)
                                             green:(175.0f/255.0f)
                                              blue:(198.0f/255.0f)
                                             alpha:1.0f];
-    } else if (temperature > 10 && temperature < 20) {
+    } else if (temperature > 15 && temperature < 25) {
         temperatureColour = [UIColor colorWithRed:(94.0f/255.0f)
                                            green:(230.0f/255.0f)
                                             blue:(189.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 20 && temperature < 30) {
+    } else if (temperature > 25 && temperature < 35) {
         temperatureColour = [UIColor colorWithRed:(105.0f/255.0f)
                                            green:(230.0f/255.0f)
                                             blue:(189.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 30 && temperature < 40) {
+    } else if (temperature > 35 && temperature < 45) {
         temperatureColour = [UIColor colorWithRed:(227.0f/255.0f)
                                            green:(227.0f/255.0f)
                                             blue:(25.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 40 && temperature < 50) {
+    } else if (temperature > 45 && temperature < 55) {
         temperatureColour = [UIColor colorWithRed:(217.0f/255.0f)
                                            green:(141.0f/255.0f)
                                             blue:(20.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 50) {
+    } else if (temperature > 55) {
         temperatureColour = [UIColor colorWithRed:(191.0f/255.0f)
                                            green:(36.0f/255.0f)
                                             blue:(36.0f/255.0f)
@@ -83,6 +83,9 @@ UIColor* colorForTemperature(float temperature)
 @interface TPWeatherWatcherViewController ()
 @property (nonatomic, strong) NSMutableArray *forecastItems;
 @property (nonatomic, strong) TPWeather *weather;
+@property (nonatomic) BOOL weatherLoaded;
+@property (nonatomic) BOOL forecastLoaded;
+@property (nonatomic) BOOL locationNameLoaded;
 @end
 
 @implementation TPWeatherWatcherViewController
@@ -94,6 +97,10 @@ UIColor* colorForTemperature(float temperature)
         // Custom initialization
         self.weather = [[TPWeather alloc] init];
         [self initialiseForecastItems];
+        
+        self.weatherLoaded = NO;
+        self.forecastLoaded = NO;
+        self.locationNameLoaded = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(weatherLoaded:)
@@ -170,52 +177,94 @@ UIColor* colorForTemperature(float temperature)
 
 - (void)weatherLoaded:(NSNotification *)notification
 {
-    NSDictionary *currentForecast = [notification object];
-    float currentTemperature = [[[currentForecast objectForKey:@"main"] objectForKey:@"temp_max"] floatValue];
-    self.temperature.text = [NSString stringWithFormat:@"%0.1f", currentTemperature];
- 
-    NSString *apiWeatherImageName = [[[currentForecast objectForKey:@"weather"] objectAtIndex:0] objectForKey:@"icon"];
-    UIImage *weatherImage = APIImageToLocalImage(apiWeatherImageName);
-    self.weatherStateIcon.image = weatherImage;
-    
-    NSLog(@"Weather Loaded: %f", currentTemperature);
-    [UIView animateWithDuration:0.2
+    [UIView animateWithDuration:0.5
                      animations:^{
-                         self.view.backgroundColor = colorForTemperature(currentTemperature);
+                         self.temperature.alpha = 0.0f;
+                         self.weatherStateIcon.alpha = 0.0f;
+                     } completion:^(BOOL finished) {
+                         NSDictionary *currentForecast = [notification object];
+                         float currentTemperature = [[[currentForecast objectForKey:@"main"] objectForKey:@"temp_max"] floatValue];
+                         self.temperature.text = [NSString stringWithFormat:@"%0.1f", currentTemperature];
+                         
+                         NSString *apiWeatherImageName = [[[currentForecast objectForKey:@"weather"] objectAtIndex:0] objectForKey:@"icon"];
+                         UIImage *weatherImage = APIImageToLocalImage(apiWeatherImageName);
+                         self.weatherStateIcon.image = weatherImage;                         
+                         self.weatherLoaded = YES;
+                         
+                         [UIView animateWithDuration:0.5
+                                          animations:^{
+                                              self.view.backgroundColor = colorForTemperature(currentTemperature);
+                                          } completion:^(BOOL finished) {
+                                              [self reloadElements];
+                                          }];
+                         
+                         
                      }];
+    
 }
+
 
 - (void)forecastLoaded:(NSNotification *)notification
 {
-    NSLog(@"Forecast Loaded: %@", NSStringFromClass ([[notification object] class]));
-    NSLog(@"Forecast Loaded: %@", [notification object]);
-
     NSArray *forecastData = [[notification object] objectForKey:@"list"];
     
-    for (int i = 0; i < kTPMaxForecastItems; i++)
-    {
-        TPWeatherForecastItem *forecastItem = [self.forecastItems objectAtIndex:i];
-        NSDictionary *forecast = [forecastData objectAtIndex:i];
-        float temperature = [[[forecast objectForKey:@"temp"] objectForKey:@"max"] floatValue];
-        forecastItem.temperature.text = [NSString stringWithFormat:@"%0.1f", temperature];
-        
-        NSString *weatherIconName = [[[forecast objectForKey:@"weather"] objectAtIndex:0] objectForKey:@"icon"];
-        forecastItem.weatherIcon.image = APIImageToLocalImage(weatherIconName);
-        
-        // Set the forecast day
-        NSTimeInterval epochTime = [[forecast objectForKey:@"dt"] doubleValue];
-        NSDate *date =[[NSDate alloc] initWithTimeIntervalSince1970:epochTime];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"EEE"];
-        NSLog(@"Loaded Date: %@", [formatter stringFromDate:date]);
-
-        forecastItem.day.text = [[formatter stringFromDate:date] uppercaseString];
-    }
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         self.fiveDayForecast.alpha = 0.0f;
+                     } completion:^(BOOL finished) {
+                         
+                         for (int i = 0; i < kTPMaxForecastItems; i++)
+                         {
+                             TPWeatherForecastItem *forecastItem = [self.forecastItems objectAtIndex:i];
+                             NSDictionary *forecast = [forecastData objectAtIndex:i];
+                             float temperature = [[[forecast objectForKey:@"temp"] objectForKey:@"max"] floatValue];
+                             forecastItem.temperature.text = [NSString stringWithFormat:@"%0.1f", temperature];
+                             
+                             NSString *weatherIconName = [[[forecast objectForKey:@"weather"] objectAtIndex:0] objectForKey:@"icon"];
+                             forecastItem.weatherIcon.image = APIImageToLocalImage(weatherIconName);
+                             
+                             // Set the forecast day
+                             NSTimeInterval epochTime = [[forecast objectForKey:@"dt"] doubleValue];
+                             NSDate *date =[[NSDate alloc] initWithTimeIntervalSince1970:epochTime];
+                             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                             [formatter setDateFormat:@"EEE"];
+                             
+                             forecastItem.day.text = [[formatter stringFromDate:date] uppercaseString];
+                             self.forecastLoaded = YES;                             
+                             [self reloadElements];
+                         }
+                     }];
 }
 
 - (void)locationNameLoaded:(NSNotification *)notification
 {
-    self.currentLocationName.text = [[notification object] uppercaseString];
+
+    [UIView animateWithDuration:1.0f
+                     animations:^{
+                         self.currentLocationName.alpha = 0.0f;
+                     } completion:^(BOOL finished) {
+                         self.currentLocationName.text = [[notification object] uppercaseString];
+                         self.locationNameLoaded = YES;
+                         [self reloadElements];
+                     }];
+}
+
+- (void)reloadElements
+{
+    if (self.weatherLoaded && self.locationNameLoaded && self.locationNameLoaded)
+    {
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             self.fiveDayForecast.alpha = 1.0f;
+                             self.currentLocationName.alpha = 1.0f;
+                             self.temperature.alpha = 1.0f;
+                             self.weatherStateIcon.alpha = 1.0f;
+                         } completion:^(BOOL finished) {
+                             self.locationNameLoaded = NO;
+                             self.weatherLoaded = NO;
+                             self.forecastLoaded = NO;
+                         }];
+    }
 }
 
 
