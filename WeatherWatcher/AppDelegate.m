@@ -7,7 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import <AFNetworking/AFHTTPClient.h>
 #import "TPWeatherWatcherViewController.h"
+
+@interface AppDelegate ()
+
+@property (strong, nonatomic) AFHTTPClient *reachabilityClient;
+
+@end
 
 @implementation AppDelegate
 
@@ -19,6 +26,19 @@
     self.window.rootViewController = [[TPWeatherWatcherViewController alloc] initWithNibName:@"TPWeatherWatcher"
                                                                                       bundle:nil];
     [self.window makeKeyAndVisible];
+    
+    // Setup a general reachability handler
+    self.reachabilityClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://www.google.com"]];
+    [self.reachabilityClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        if (status == AFNetworkReachabilityStatusNotReachable) {
+            // Not reachable
+            [[NSNotificationCenter defaultCenter] postNotification:kTPNetworkUnavailable];
+        } else {
+            // Reachable
+            [[NSNotificationCenter defaultCenter] postNotification:kTPNetworkAvailable];
+        }
+    }];
+    
     return YES;
 }
 

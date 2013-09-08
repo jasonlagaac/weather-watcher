@@ -127,7 +127,6 @@ UIColor* colorForTemperature(float temperature)
     self.forecastItems = nil;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -136,6 +135,7 @@ UIColor* colorForTemperature(float temperature)
     [self.weather startMonitoringLocation];
     [self drawForecast];
     
+    // Determine screen layout if it is a 3.5 inch screen.
     if (!IS_4INCH_SCREEN) {
         [self layoutInterface];
     }
@@ -151,6 +151,9 @@ UIColor* colorForTemperature(float temperature)
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Interface Layout Actions
+////////////////////////////////////////////////////////////////////////////////
 
 - (void)layoutInterface {
     self.currentLocationName.center = CGPointMake(self.currentLocationName.center.x, self.currentLocationName.center.y - 25.0f);
@@ -191,6 +194,7 @@ UIColor* colorForTemperature(float temperature)
     {
         [UIView animateWithDuration:0.5
                          animations:^{
+                             // Fade out first if visible
                              self.fiveDayForecast.alpha = 1.0f;
                              self.currentLocationName.alpha = 1.0f;
                              self.temperature.alpha = 1.0f;
@@ -212,6 +216,7 @@ UIColor* colorForTemperature(float temperature)
 {
     [UIView animateWithDuration:0.5
                      animations:^{
+                         // Fade out first if visible
                          self.temperature.alpha = 0.0f;
                          self.weatherStateIcon.alpha = 0.0f;
                      } completion:^(BOOL finished) {
@@ -243,6 +248,7 @@ UIColor* colorForTemperature(float temperature)
     
     [UIView animateWithDuration:0.5
                      animations:^{
+                         // Fade out first if visible
                          self.fiveDayForecast.alpha = 0.0f;
                      } completion:^(BOOL finished) {
                          
@@ -274,6 +280,7 @@ UIColor* colorForTemperature(float temperature)
     NSLog(@"Location Name Loaded");
     [UIView animateWithDuration:1.0f
                      animations:^{
+                         // Fade out first if visible
                          self.currentLocationName.alpha = 0.0f;
                      } completion:^(BOOL finished) {
                          self.currentLocationName.text = [[notification object] uppercaseString];
@@ -305,7 +312,7 @@ UIColor* colorForTemperature(float temperature)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80.0f;
+    return 60.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -348,10 +355,12 @@ UIColor* colorForTemperature(float temperature)
     
     switch (indexPath.row) {
         case 0:
+            // Load weather for the current location
             [self.weather startMonitoringLocation];
             break;
             
         default:
+            // Load weather based on existing default location
             location = [[self.weather existingLocations] objectAtIndex:indexPath.row - 1];
             [self.weather stopMonitoringLocation];
             

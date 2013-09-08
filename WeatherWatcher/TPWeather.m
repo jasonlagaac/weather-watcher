@@ -66,7 +66,7 @@
                      [[NSNotificationCenter defaultCenter] postNotificationName:kTPWeatherNotification
                                                                          object:payload];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+                     NSLog(@"NO CONNECTION");
                  }];
 }
 
@@ -83,7 +83,7 @@
                      [[NSNotificationCenter defaultCenter] postNotificationName:kTPFiveDayForecastNotification
                                                                          object:payload];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+                     NSLog(@"NO CONNECTION");
                  }];
 }
 
@@ -94,7 +94,6 @@
                                                       longitude:longitude];
     CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        NSLog(@"Placemark: %@", [[placemarks objectAtIndex:0] locality]);
         [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
                                                             object:[[placemarks objectAtIndex:0] locality]];
         
