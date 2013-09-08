@@ -18,7 +18,6 @@
 @property (nonatomic, strong) IBOutlet UIView *mainContent;
 @property (nonatomic, strong) IBOutlet UITableView *locationListTable;
 
-
 - (IBAction)presentMenu:(id)sender;
 
 @end

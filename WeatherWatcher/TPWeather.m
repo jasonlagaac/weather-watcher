@@ -14,6 +14,7 @@
 @property (nonatomic, strong) AFHTTPClient *client;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
+@property (nonatomic) BOOL staticLocation;
 @end
 
 
@@ -30,6 +31,9 @@
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.locationManager.distanceFilter = 1000.0f;
         self.locationManager.delegate = self;
+        
+        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Locations" ofType:@"plist"];
+        self.existingLocations = [NSMutableArray arrayWithContentsOfFile:plistPath];
 }
     
     return self;
@@ -50,8 +54,6 @@
 
 - (void)retrieveWeatherAtLatitude:(double)latitude
                         longitude:(double)longitude
-                          success:(void ( ^ )(NSDictionary *data))successBlock
-                             fail:(void ( ^ )())failBlock
 {
     NSString *getPath = [NSString stringWithFormat:@"weather?lat=%f&lon=%f&units=metric&APPID=%@", latitude, longitude, kAppID];
     [self.client getPath:getPath
@@ -61,16 +63,15 @@
                                                                    options:NSJSONReadingMutableContainers
                                                                      error:nil];
                      NSLog(@"Payload: %@", payload);
-                      successBlock(payload);
-                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      failBlock();
-                  }];
+                     [[NSNotificationCenter defaultCenter] postNotificationName:kTPWeatherNotification
+                                                                         object:payload];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+                 }];
 }
 
 - (void)retrieveFiveDayWeatherForecastAtLatitude:(double)latitude
                                        longitude:(double)longitude
-                                         success:(void ( ^ )(NSDictionary *data))successBlock
-                                            fail:(void ( ^ )())failBlock
 {
     NSString *getPath = [NSString stringWithFormat:@"forecast/daily?lat=%f&lon=%f&units=metric&cnt=5&APPID=%@", latitude, longitude, kAppID];
     [self.client getPath:getPath
@@ -79,9 +80,10 @@
                      id payload = [NSJSONSerialization JSONObjectWithData:responseObject
                                                                   options:NSJSONReadingMutableContainers
                                                                     error:nil];
-                     successBlock(payload);
+                     [[NSNotificationCenter defaultCenter] postNotificationName:kTPFiveDayForecastNotification
+                                                                         object:payload];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     failBlock();
+
                  }];
 }
 
@@ -95,12 +97,28 @@
 
 - (void)stopMonitoringLocation
 {
+    self.currentLocation = nil;
+    self.currentLocation = [[CLLocation alloc] initWithLatitude:0 longitude:0];
     [self.locationManager stopUpdatingLocation];
+}
+
+- (void)retrieveLocationNameAtLatitude:(double)latitude
+                             longitude:(double)longitude
+{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude
+                                                      longitude:longitude];
+    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"Placemark: %@", [[placemarks objectAtIndex:0] locality]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
+                                                            object:[[placemarks objectAtIndex:0] locality]];
+        
+    }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
-    
+
     // If it's a relatively recent event, turn off updates to save power
     CLLocation* location = [locations lastObject];
     NSDate* eventDate = location.timestamp;
@@ -114,30 +132,14 @@
               location.coordinate.longitude);
         
         [self retrieveWeatherAtLatitude:location.coordinate.latitude
-                              longitude:location.coordinate.longitude
-                                success:^(NSDictionary *data) {
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:kTPWeatherNotification
-                                                                                        object:data];
-                                } fail:^{
-                                    
-                                }];
+                              longitude:location.coordinate.longitude];
+
         
         [self retrieveFiveDayWeatherForecastAtLatitude:location.coordinate.latitude
-                                             longitude:location.coordinate.longitude
-                                               success:^(NSDictionary *data) {
-                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kTPFiveDayForecastNotification
-                                                                                                       object:data];
-                                               } fail:^{
-                                    
-                                               }];
+                                             longitude:location.coordinate.longitude];
         
-        CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
-        [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            NSLog(@"Placemark: %@", [[placemarks objectAtIndex:0] locality]);
-            [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
-                                                                object:[[placemarks objectAtIndex:0] locality]];
-
-        }];
+        [self retrieveLocationNameAtLatitude:location.coordinate.latitude
+                                   longitude:location.coordinate.longitude];
     }
 }
 

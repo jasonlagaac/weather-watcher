@@ -164,4 +164,9 @@
     assertThat(sut.locationListTable.dataSource, notNilValue());
 }
 
+- (void)testLocationTableListShouldHaveTotalNumberOfRowsInSection
+{
+    assertThatInteger([sut.locationListTable numberOfRowsInSection:0], notNilValue());
+}
+
 @end

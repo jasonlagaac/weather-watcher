@@ -24,3 +24,6 @@
 #define kTPReverseGeocodingNotification @"ReverseGeocodingRetrieved"
 
 #define kTPMaxForecastItems 5
+
+#define IS_4INCH_SCREEN (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
+

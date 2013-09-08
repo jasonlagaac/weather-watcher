@@ -78,14 +78,7 @@
 
     // When
     [sut retrieveWeatherAtLatitude:-33.880036
-                         longitude:151.200238
-                           success:^(NSDictionary *data) {
-                               weatherData = [data copy];                               
-                               dispatch_semaphore_signal(semaphore);
-                           } fail:^{
-                               weatherData = nil;
-                               dispatch_semaphore_signal(semaphore);
-                           }];
+                         longitude:151.200238];
     
     while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
@@ -103,13 +96,7 @@
     
     // When
     [sut retrieveFiveDayWeatherForecastAtLatitude:-33.880036
-                                        longitude:151.200238
-                                          success:^(NSDictionary *data){
-                                              weatherForecast = [data copy];
-                                              dispatch_semaphore_signal(semaphore);
-                                          } fail:^{
-                                              dispatch_semaphore_signal(semaphore);
-                                          }];
+                                        longitude:151.200238];
     
     while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode

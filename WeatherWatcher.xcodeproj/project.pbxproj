@@ -30,6 +30,7 @@
 		B834FC7617DBA8CE0015D6C0 /* Rain.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC6F17DBA8CE0015D6C0 /* Rain.png */; };
 		B834FC7717DBA8CE0015D6C0 /* Snow.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC7017DBA8CE0015D6C0 /* Snow.png */; };
 		B834FC7817DBA8CE0015D6C0 /* Storm.png in Resources */ = {isa = PBXBuildFile; fileRef = B834FC7117DBA8CE0015D6C0 /* Storm.png */; };
+		B84EAA3D17DC16EC00A01EF1 /* Locations.plist in Resources */ = {isa = PBXBuildFile; fileRef = B84EAA3C17DC16EC00A01EF1 /* Locations.plist */; };
 		B8F5216617D8AEC2002FE8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216517D8AEC2002FE8E5 /* UIKit.framework */; };
 		B8F5216817D8AEC2002FE8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216717D8AEC2002FE8E5 /* Foundation.framework */; };
 		B8F5216A17D8AEC2002FE8E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F5216917D8AEC2002FE8E5 /* CoreGraphics.framework */; };
@@ -79,6 +80,7 @@
 		B834FC6F17DBA8CE0015D6C0 /* Rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain.png; sourceTree = "<group>"; };
 		B834FC7017DBA8CE0015D6C0 /* Snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow.png; sourceTree = "<group>"; };
 		B834FC7117DBA8CE0015D6C0 /* Storm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Storm.png; sourceTree = "<group>"; };
+		B84EAA3C17DC16EC00A01EF1 /* Locations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Locations.plist; sourceTree = "<group>"; };
 		B8F5216217D8AEC2002FE8E5 /* WeatherWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F5216517D8AEC2002FE8E5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B8F5216717D8AEC2002FE8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -211,6 +213,7 @@
 				B8F5216E17D8AEC3002FE8E5 /* InfoPlist.strings */,
 				B8F5217117D8AEC3002FE8E5 /* main.m */,
 				B8F5217317D8AEC3002FE8E5 /* WeatherWatcher-Prefix.pch */,
+				B84EAA3C17DC16EC00A01EF1 /* Locations.plist */,
 				B8F5217717D8AEC3002FE8E5 /* Default.png */,
 				B8F5217917D8AEC3002FE8E5 /* Default@2x.png */,
 				B8F5217B17D8AEC3002FE8E5 /* Default-568h@2x.png */,
@@ -326,6 +329,7 @@
 				B834FC7617DBA8CE0015D6C0 /* Rain.png in Resources */,
 				B834FC7717DBA8CE0015D6C0 /* Snow.png in Resources */,
 				B834FC7817DBA8CE0015D6C0 /* Storm.png in Resources */,
+				B84EAA3D17DC16EC00A01EF1 /* Locations.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

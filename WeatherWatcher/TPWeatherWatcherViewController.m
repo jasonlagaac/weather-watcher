@@ -135,6 +135,10 @@ UIColor* colorForTemperature(float temperature)
         
     [self.weather startMonitoringLocation];
     [self drawForecast];
+    
+    if (IS_4INCH_SCREEN) {
+        [self layoutInterface];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -146,6 +150,11 @@ UIColor* colorForTemperature(float temperature)
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)layoutInterface {
+    self.currentLocationName.center = CGPointMake(self.currentLocationName.center.x, self.currentLocationName.center.y - 25.0f);
+    self.fiveDayForecast.center = CGPointMake(self.fiveDayForecast.center.x, self.fiveDayForecast.center.y - 65.0f);
 }
 
 - (void)initialiseForecastItems
@@ -172,6 +181,28 @@ UIColor* colorForTemperature(float temperature)
     }
 }
 
+
+#pragma mark - Element Load Actions
+////////////////////////////////////////////////////////////////////////////////
+
+- (void)reloadElements
+{
+    if (self.weatherLoaded && self.locationNameLoaded && self.locationNameLoaded)
+    {
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             self.fiveDayForecast.alpha = 1.0f;
+                             self.currentLocationName.alpha = 1.0f;
+                             self.temperature.alpha = 1.0f;
+                             self.weatherStateIcon.alpha = 1.0f;
+                             self.menuButton.alpha = 1.0f;
+                         } completion:^(BOOL finished) {
+                             self.locationNameLoaded = NO;
+                             self.weatherLoaded = NO;
+                             self.forecastLoaded = NO;
+                         }];
+    }
+}
 
 
 #pragma mark - Notification Handlers
@@ -240,7 +271,7 @@ UIColor* colorForTemperature(float temperature)
 
 - (void)locationNameLoaded:(NSNotification *)notification
 {
-
+    NSLog(@"Location Name Loaded");
     [UIView animateWithDuration:1.0f
                      animations:^{
                          self.currentLocationName.alpha = 0.0f;
@@ -251,27 +282,7 @@ UIColor* colorForTemperature(float temperature)
                      }];
 }
 
-#pragma mark - Element Load Actions
-////////////////////////////////////////////////////////////////////////////////
 
-- (void)reloadElements
-{
-    if (self.weatherLoaded && self.locationNameLoaded && self.locationNameLoaded)
-    {
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             self.fiveDayForecast.alpha = 1.0f;
-                             self.currentLocationName.alpha = 1.0f;
-                             self.temperature.alpha = 1.0f;
-                             self.weatherStateIcon.alpha = 1.0f;
-                             self.menuButton.alpha = 1.0f;
-                         } completion:^(BOOL finished) {
-                             self.locationNameLoaded = NO;
-                             self.weatherLoaded = NO;
-                             self.forecastLoaded = NO;
-                         }];
-    }
-}
 
 #pragma mark - Interface Actions
 ////////////////////////////////////////////////////////////////////////////////
@@ -287,6 +298,76 @@ UIColor* colorForTemperature(float temperature)
                          }
                      }];
 }
+
+
+#pragma mark - Table Data Source
+////////////////////////////////////////////////////////////////////////////////
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80.0f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.weather.existingLocations.count + 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *identifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    NSDictionary *existingLocation = nil;
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    cell.textLabel.textColor = [UIColor whiteColor];
+
+    switch (indexPath.row ) {
+        case 0:
+            cell.textLabel.text = @"Current Location";
+            break;
+        default:
+            existingLocation = [self.weather.existingLocations objectAtIndex:indexPath.row - 1];
+            cell.textLabel.text = [existingLocation objectForKey:@"name"];
+    }
+    
+    return cell;
+}
+
+
+#pragma mark - Table Delegate Actions
+////////////////////////////////////////////////////////////////////////////////
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *location;
+    
+    switch (indexPath.row) {
+        case 0:
+            [self.weather startMonitoringLocation];
+            break;
+            
+        default:
+            location = [[self.weather existingLocations] objectAtIndex:indexPath.row - 1];
+            [self.weather stopMonitoringLocation];
+            
+            [self.weather retrieveWeatherAtLatitude:[[location objectForKey:@"latitude"] doubleValue]
+                                          longitude:[[location objectForKey:@"longitude"] doubleValue]];
+            [self.weather retrieveFiveDayWeatherForecastAtLatitude:[[location objectForKey:@"latitude"] doubleValue]
+                                                         longitude:[[location objectForKey:@"longitude"] doubleValue]];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
+                                                                object:[location objectForKey:@"name"]];
+            break;
+    }
+}
+
+
+
 
 
 @end
