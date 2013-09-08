@@ -4,6 +4,14 @@
 <array>
 	<dict>
 		<key>name</key>
+		<string>La Paz</string>
+		<key>latitude</key>
+		<string>-16.483498</string>
+		<key>longitude</key>
+		<string>-68.146241</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>New York</string>
 		<key>latitude</key>
 		<real>40.759211</real>
@@ -17,6 +25,14 @@
 		<string>35.702069</string>
 		<key>longitude</key>
 		<string>139.775327</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Dubai</string>
+		<key>latitude</key>
+		<string>25.324167</string>
+		<key>longitude</key>
+		<string>55.296507</string>
 	</dict>
 </array>
 </plist>
