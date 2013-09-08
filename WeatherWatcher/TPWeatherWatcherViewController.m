@@ -45,27 +45,27 @@ UIColor* colorForTemperature(float temperature)
                                            green:(225.0f/255.0f)
                                             blue:(235.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 0 && temperature < 15) {
+    } else if (temperature > 0 && temperature <= 15) {
         temperatureColour =  [UIColor colorWithRed:(51.0f/255.0f)
                                             green:(175.0f/255.0f)
                                              blue:(198.0f/255.0f)
                                             alpha:1.0f];
-    } else if (temperature > 15 && temperature < 25) {
+    } else if (temperature > 15 && temperature <= 25) {
         temperatureColour = [UIColor colorWithRed:(94.0f/255.0f)
                                            green:(230.0f/255.0f)
                                             blue:(189.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 25 && temperature < 35) {
+    } else if (temperature > 25 && temperature <= 35) {
         temperatureColour = [UIColor colorWithRed:(105.0f/255.0f)
                                            green:(230.0f/255.0f)
                                             blue:(189.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 35 && temperature < 45) {
+    } else if (temperature > 35 && temperature <= 45) {
         temperatureColour = [UIColor colorWithRed:(227.0f/255.0f)
                                            green:(227.0f/255.0f)
                                             blue:(25.0f/255.0f)
                                            alpha:1.0f];
-    } else if (temperature > 45 && temperature < 55) {
+    } else if (temperature > 45 && temperature <= 55) {
         temperatureColour = [UIColor colorWithRed:(217.0f/255.0f)
                                            green:(141.0f/255.0f)
                                             blue:(20.0f/255.0f)
