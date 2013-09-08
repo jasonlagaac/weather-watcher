@@ -49,42 +49,43 @@
 
 }
 
-#pragma mark - Weather Retrieveal Actions
+#pragma mark - Retrieveal Actions
 /////////////////////////////////////////////////////////////////////////////////
 
 - (void)retrieveWeatherAtLatitude:(double)latitude
                         longitude:(double)longitude
 {
     NSString *getPath = [NSString stringWithFormat:@"weather?lat=%f&lon=%f&units=metric&APPID=%@", latitude, longitude, kAppID];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.client getPath:getPath
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       id payload = [NSJSONSerialization JSONObjectWithData:responseObject
                                                                    options:NSJSONReadingMutableContainers
                                                                      error:nil];
-                     NSLog(@"Payload: %@", payload);
+                     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                      [[NSNotificationCenter defaultCenter] postNotificationName:kTPWeatherNotification
                                                                          object:payload];
-                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"NO CONNECTION");
-                 }];
+                 } failure:nil];
 }
 
 - (void)retrieveFiveDayWeatherForecastAtLatitude:(double)latitude
                                        longitude:(double)longitude
 {
     NSString *getPath = [NSString stringWithFormat:@"forecast/daily?lat=%f&lon=%f&units=metric&cnt=5&APPID=%@", latitude, longitude, kAppID];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self.client getPath:getPath
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                      id payload = [NSJSONSerialization JSONObjectWithData:responseObject
                                                                   options:NSJSONReadingMutableContainers
                                                                     error:nil];
+                     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                      [[NSNotificationCenter defaultCenter] postNotificationName:kTPFiveDayForecastNotification
                                                                          object:payload];
-                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"NO CONNECTION");
-                 }];
+                 } failure:nil];
 }
 
 - (void)retrieveLocationNameAtLatitude:(double)latitude
@@ -120,13 +121,13 @@
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
 
-    // If it's a relatively recent event, turn off updates to save power
     CLLocation* location = [locations lastObject];
     NSDate* eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     
     if (abs(howRecent) < 300.0 && [self.currentLocation distanceFromLocation:location]) {
-        // If the event is recent, do something with it.
+        // load new weather details
+        
         self.currentLocation = location;
         NSLog(@"latitude %+.6f, longitude %+.6f\n",
               location.coordinate.latitude,
@@ -135,7 +136,6 @@
         [self retrieveWeatherAtLatitude:location.coordinate.latitude
                               longitude:location.coordinate.longitude];
 
-        
         [self retrieveFiveDayWeatherForecastAtLatitude:location.coordinate.latitude
                                              longitude:location.coordinate.longitude];
         

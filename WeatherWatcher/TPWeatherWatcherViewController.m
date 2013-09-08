@@ -139,6 +139,8 @@ UIColor* colorForTemperature(float temperature)
     if (!IS_4INCH_SCREEN) {
         [self layoutInterface];
     }
+    
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -158,6 +160,12 @@ UIColor* colorForTemperature(float temperature)
 - (void)layoutInterface {
     self.currentLocationName.center = CGPointMake(self.currentLocationName.center.x, self.currentLocationName.center.y - 25.0f);
     self.fiveDayForecast.center = CGPointMake(self.fiveDayForecast.center.x, self.fiveDayForecast.center.y - 65.0f);
+    
+    // Set the first menu cell to the default selection
+    NSIndexPath *currentLocationTablePath = [NSIndexPath indexPathForItem:0 inSection:0];
+    [self.locationListTable selectRowAtIndexPath:currentLocationTablePath
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)initialiseForecastItems

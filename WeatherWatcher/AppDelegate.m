@@ -32,10 +32,12 @@
     [self.reachabilityClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         if (status == AFNetworkReachabilityStatusNotReachable) {
             // Not reachable
-            [[NSNotificationCenter defaultCenter] postNotification:kTPNetworkUnavailable];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTPNetworkUnavailable
+                                                                object:nil];
         } else {
             // Reachable
-            [[NSNotificationCenter defaultCenter] postNotification:kTPNetworkAvailable];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTPNetworkAvailable
+                                                                object:nil];
         }
     }];
     
