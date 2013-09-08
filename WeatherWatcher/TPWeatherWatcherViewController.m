@@ -136,7 +136,7 @@ UIColor* colorForTemperature(float temperature)
     [self.weather startMonitoringLocation];
     [self drawForecast];
     
-    if (IS_4INCH_SCREEN) {
+    if (!IS_4INCH_SCREEN) {
         [self layoutInterface];
     }
 }

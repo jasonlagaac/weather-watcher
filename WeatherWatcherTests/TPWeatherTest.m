@@ -29,8 +29,8 @@
     TPWeather *sut;
 
     dispatch_semaphore_t semaphore;
-    __block NSDictionary *weatherData;
-    __block NSArray *weatherForecast;
+    NSDictionary *weatherData;
+    NSArray *weatherForecast;
     NSString *locationName;
 }
 
@@ -38,6 +38,12 @@
 {
     [super setUp];
     sut = [[TPWeather alloc] init];
+    
+    weatherData = nil;
+    weatherForecast = nil;
+    locationName = nil;
+    
+    semaphore = dispatch_semaphore_create(0);
 
 }
 
@@ -51,20 +57,27 @@
 
 - (void)weatherRetrieved:(NSNotification *)notification
 {
-    weatherData = [[notification object] copy];
-    dispatch_semaphore_signal(semaphore);
+    if (!weatherData) {
+        NSLog(@"Weather Retrieved Here %@", weatherData);
+        weatherData = [notification object];
+        dispatch_semaphore_signal(semaphore);
+    }
 }
 
 - (void)forecastRetrieved:(NSNotification *)notification
 {
-    weatherForecast = [[notification object] copy];
-    dispatch_semaphore_signal(semaphore);
+    if (!weatherForecast) {
+        weatherForecast = [[notification object] copy];
+        dispatch_semaphore_signal(semaphore);
+    }
 }
 
 - (void)locationNameRetrieved:(NSNotification *)notification
 {
-    locationName = [[notification object] copy];
-    dispatch_semaphore_signal(semaphore);
+    if (!locationName) {
+        locationName = [[notification object] copy];
+        dispatch_semaphore_signal(semaphore);
+    }
 }
 
 
@@ -73,9 +86,11 @@
 
 - (void)testShouldRetrieveCurrentWeatherAtLocation
 {
-    // Given
-    semaphore = dispatch_semaphore_create(0);
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(weatherRetrieved:)
+                                                 name:kTPWeatherNotification
+                                               object:nil];
     // When
     [sut retrieveWeatherAtLatitude:-33.880036
                          longitude:151.200238];
@@ -83,7 +98,6 @@
     while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-    
     // Then
     assertThat(weatherData, notNilValue());
 }
@@ -91,8 +105,10 @@
 
 - (void)testShouldRetrieveTheFiveDayWeatherForecastForLocation
 {
-    // Given
-    semaphore = dispatch_semaphore_create(0);
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(forecastRetrieved:)
+                                                 name:kTPFiveDayForecastNotification
+                                               object:nil];
     
     // When
     [sut retrieveFiveDayWeatherForecastAtLatitude:-33.880036
@@ -108,13 +124,10 @@
 
 - (void)testShouldRetrieveWeatherWithLocationServices
 {
-    //Given
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(weatherRetrieved:)
                                                  name:kTPWeatherNotification
                                                object:nil];
-    semaphore = dispatch_semaphore_create(0);
-    
     // When
     [sut startMonitoringLocation];
     
@@ -127,11 +140,12 @@
 
 - (void)testShouldRetrieveForecastWithLocationServices
 {
-    //Given
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(forecastRetrieved:)
                                                  name:kTPFiveDayForecastNotification
                                                object:nil];
+    
     semaphore = dispatch_semaphore_create(0);
     
     // When
@@ -150,8 +164,6 @@
                                              selector:@selector(locationNameRetrieved:)
                                                  name:kTPReverseGeocodingNotification
                                                object:nil];
-    semaphore = dispatch_semaphore_create(0);
-    
     // When
     [sut startMonitoringLocation];
     

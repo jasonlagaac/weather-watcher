@@ -87,6 +87,21 @@
                  }];
 }
 
+- (void)retrieveLocationNameAtLatitude:(double)latitude
+                             longitude:(double)longitude
+{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude
+                                                      longitude:longitude];
+    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"Placemark: %@", [[placemarks objectAtIndex:0] locality]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
+                                                            object:[[placemarks objectAtIndex:0] locality]];
+        
+    }];
+}
+
+
 #pragma mark - CLLocation Delegates
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -102,19 +117,6 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-- (void)retrieveLocationNameAtLatitude:(double)latitude
-                             longitude:(double)longitude
-{
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude
-                                                      longitude:longitude];
-    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
-    [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        NSLog(@"Placemark: %@", [[placemarks objectAtIndex:0] locality]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kTPReverseGeocodingNotification
-                                                            object:[[placemarks objectAtIndex:0] locality]];
-        
-    }];
-}
 
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
